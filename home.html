@@ -1,9 +1,9 @@
-<html>
+<!DOCTYPE html>
     <head>
 	<title>Window</title>
     </head>
     <body>
-        <div class="window" id="information">
+        <div class="window inactive" id="helloworld">
             <div class="window-header">
               <div class="window-text">Test</div>
             </div>
@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <div class="window" id="information">
+        <div class="window inactive" id="secondwindow">
             <div class="window-header">
               <div class="window-text">Second Window</div>
             </div>
@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="window" id="information">
+        <div class="window active" id="musicplayer">
             <div class="window-header">
               <div class="window-text">Music Player</div>
             </div>
@@ -30,22 +30,22 @@
                 <br>
                 <audio controls src="/backgroundMusic.mp3" type="audio/mpeg"></audio>
                 <br>
-		<i style="font-size:small; color:grey;">PlayStation 3 Photo Gallery - BGM 9</i>
-		<p></p>
-		<i style="font-size:small; color:grey;">Sony Computer Entertainment</i>
+		        <i style="font-size:small; color:grey;">PlayStation 3 Photo Gallery - BGM 9</i>
+		        <p></p>
+		        <i style="font-size:small; color:grey;">Sony Computer Entertainment</i>
             </div>
         </div>
     </body>
-
-
     <style>
         :root {
-            background: transparent;
+            background:transparent;
         }
+
         .window-body {
             resize: both;
             overflow: scroll;
         }
+
         .window {
             position: absolute;
             border-radius: 5px;
@@ -53,16 +53,17 @@
             background-color: rgba(216, 222, 233, 0.75);
             background-image: url(/aero.png);
             border: 2px solid;
-            border-color: #4c566a7F;
+
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
 		
-	    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-	    backdrop-filter: blur(2px);
-	    -webkit-backdrop-filter: blur(2px);
+	        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	        backdrop-filter: blur(2px);
+	        -webkit-backdrop-filter: blur(2px);
         }
+
         .window-header {
             padding: 20px;
             font-weight: bold;
@@ -70,6 +71,44 @@
             cursor: move;
         }
 
+        .active {
+            border-color: #8fbcbb7F;
+            color: black;
+        }
+
+        .inactive {
+            border-color: #4c566a7F;
+            color: grey;
+        }
+    </style>
+    <style>
+        #helloworld {
+            top: 167px;
+            left:372px;
+        }
+        #helloworld .window-body {
+            width: 271px;
+            height: 157px;
+        }
+
+        #secondwindow {
+            top: 214px;
+            left: 589px;
+        }
+        #secondwindow .window-body {
+            width:566px;
+            height: 212px;
+        }
+
+        #musicplayer {
+            top: 365px;
+            left: 332px;
+        }
+
+        #musicplayer .window-body {
+            width: 520px;
+            height: 230px;
+        }
     </style>
     <script>
         const windows = document.querySelectorAll(".window");
@@ -80,41 +119,40 @@
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
             elmnt.onmousedown = updateSort;
             elmnt.children[0].onmousedown = startMovingWindow;
-      
+            
             function startMovingWindow(e) {
-              e = e || window.event;
-              e.preventDefault();
-              pos3 = e.clientX;
-              pos4 = e.clientY;
-              document.onmouseup = stopMovingWindow;
-              document.onmousemove = moveWindow;
+                e = e || window.event;
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = stopMovingWindow;
+                document.onmousemove = moveWindow;
+            }   
+            function updateSort() {
+                windows.forEach(window => {
+                    window.style.zIndex = window.style.zIndex - 1;
+                    window.classList.add('inactive');
+                    window.classList.remove('active');
+                });
+                elmnt.classList.remove('inactive');
+                elmnt.classList.add('active');
+                elmnt.style.zIndex = "99";
             }
 
-            function updateSort() {
-              windows.forEach(window => {
-                  window.style.zIndex = window.style.zIndex - 1;
-                  window.style.borderColor = "#4c566a7F";
-                  window.style.color = "Grey";
-              });
-              elmnt.style.zIndex = "99";
-              elmnt.style.borderColor = "#8fbcbb7F";
-              elmnt.style.color = "black";
-            }
-          
             function moveWindow(e) {
-              e = e || window.event;
-              e.preventDefault();
-              pos1 = pos3 - e.clientX;
-              pos2 = pos4 - e.clientY;
-              pos3 = e.clientX;
-              pos4 = e.clientY;
-              elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-              elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+                e = e || window.event;
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
             }
-          
+
             function stopMovingWindow() {
-              document.onmouseup = null;
-              document.onmousemove = null;
+                document.onmouseup = null;
+                document.onmousemove = null;
             }
         }
     </script>
