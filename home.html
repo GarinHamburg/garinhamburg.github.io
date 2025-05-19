@@ -1,0 +1,115 @@
+<html>
+    <head></head>
+    <body>
+        <div class="window" id="information">
+            <div class="window-header">
+              <div class="window-text">Test</div>
+            </div>
+            <div class="window-body">
+                <p>Hello World</p>
+            </div>
+        </div>
+
+        <div class="window" id="information">
+            <div class="window-header">
+              <div class="window-text">Second Window</div>
+            </div>
+            <div class="window-body">
+                <p>This is a second window.</p>
+				<i>You can tell because there's more than one of them.</i>
+            </div>
+        </div>
+
+        <div class="window" id="information">
+            <div class="window-header">
+              <div class="window-text">Music Player</div>
+            </div>
+            <div class="window-body">
+                <br>
+                <audio controls src="/backgroundMusic.mp3" type="audio/mpeg"></audio>
+                <br>
+				<i style="font-size:small; color:grey;">PlayStation 3 Photo Gallery - BGM 9</i>
+				<p></p>
+				<i style="font-size:small; color:grey;">Sony Computer Entertainment</i>
+            </div>
+        </div>
+    </body>
+
+
+    <style>
+        :root {
+            background: transparent;
+        }
+        .window-body {
+            resize: both;
+            overflow: scroll;
+        }
+        .window {
+            position: absolute;
+            border-radius: 5px;
+            text-align: center;
+            background-color: rgba(216, 222, 233, 0.75);
+            background-image: url(/aero.png);
+            border: 2px solid;
+            border-color: #4c566a7F;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .window-header {
+            padding: 20px;
+            font-weight: bold;
+            border-bottom: inherit;
+            cursor: move;
+        }
+
+    </style>
+    <script>
+        const windows = document.querySelectorAll(".window");
+
+        windows.forEach(grabWindow);
+
+        function grabWindow(elmnt) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            elmnt.onmousedown = updateSort;
+            elmnt.children[0].onmousedown = startMovingWindow;
+      
+            function startMovingWindow(e) {
+              e = e || window.event;
+              e.preventDefault();
+              pos3 = e.clientX;
+              pos4 = e.clientY;
+              document.onmouseup = stopMovingWindow;
+              document.onmousemove = moveWindow;
+            }
+
+            function updateSort() {
+              windows.forEach(window => {
+                  window.style.zIndex = window.style.zIndex - 1;
+                  window.style.borderColor = "#4c566a7F";
+                  window.style.color = "Grey";
+              });
+              elmnt.style.zIndex = "99";
+              elmnt.style.borderColor = "#8fbcbb7F";
+              elmnt.style.color = "black";
+            }
+          
+            function moveWindow(e) {
+              e = e || window.event;
+              e.preventDefault();
+              pos1 = pos3 - e.clientX;
+              pos2 = pos4 - e.clientY;
+              pos3 = e.clientX;
+              pos4 = e.clientY;
+              elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+              elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            }
+          
+            function stopMovingWindow() {
+              document.onmouseup = null;
+              document.onmousemove = null;
+            }
+        }
+    </script>
+</html>
