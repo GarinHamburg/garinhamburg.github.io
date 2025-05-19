@@ -1,5 +1,7 @@
 <html>
-    <head></head>
+    <head>
+	<title>Window</title>
+    </head>
     <body>
         <div class="window" id="information">
             <div class="window-header">
@@ -16,7 +18,7 @@
             </div>
             <div class="window-body">
                 <p>This is a second window.</p>
-				<i>You can tell because there's more than one of them.</i>
+		<i>You can tell because there's more than one of them.</i>
             </div>
         </div>
 
@@ -28,9 +30,9 @@
                 <br>
                 <audio controls src="/backgroundMusic.mp3" type="audio/mpeg"></audio>
                 <br>
-				<i style="font-size:small; color:grey;">PlayStation 3 Photo Gallery - BGM 9</i>
-				<p></p>
-				<i style="font-size:small; color:grey;">Sony Computer Entertainment</i>
+		<i style="font-size:small; color:grey;">PlayStation 3 Photo Gallery - BGM 9</i>
+		<p></p>
+		<i style="font-size:small; color:grey;">Sony Computer Entertainment</i>
             </div>
         </div>
     </body>
@@ -56,6 +58,10 @@
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+		
+	    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	    backdrop-filter: blur(2px);
+	    -webkit-backdrop-filter: blur(2px);
         }
         .window-header {
             padding: 20px;
