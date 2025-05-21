@@ -4,14 +4,17 @@
     </head>
     <body>
         <div class="window inactive" id="helloworld">
-			
             <div class="window-header">
               <div class="window-text">Test</div>
             </div>
-			
-			
-            <div class="window-body">
-                <p>Hello World</p>
+            <div class="window-content">
+                <div class="window-sidebar">
+                    <p>Hello World</p>
+                    <ul><li>OPTION</li></ul>
+                </div>
+                <div class="window-body">
+                    <p>Hello World</p>
+                </div>
             </div>
 			<div class="glass"></div>
 			<div class="highlights"></div>
@@ -22,9 +25,11 @@
             <div class="window-header">
               <div class="window-text">Second Window</div>
             </div>
+            <div class="window-content">
             <div class="window-body">
                 <p>This is a second window.</p>
 		<i>You can tell because there's more than one of them.</i>
+            </div>
             </div>
 			<div class="glass"></div>
 			<div class="highlights"></div>
@@ -34,13 +39,15 @@
             <div class="window-header">
               <div class="window-text">Music Player</div>
             </div>
-            <div class="window-body">
+            <div class="window-content">
+            <div class="window-body" style="text-align: center; align-content: center;">
                 <br>
                 <audio controls src="/backgroundMusic.mp3" type="audio/mpeg"></audio>
                 <br>
 		        <i style="font-size:small; color:grey;">PlayStation 3 Photo Gallery - BGM 9</i>
 		        <p></p>
 		        <i style="font-size:small; color:grey;">Sony Computer Entertainment</i>
+            </div>
             </div>
 			<div class="glass"></div>
 			<div class="highlights"></div>
@@ -51,14 +58,38 @@
             background:transparent;
         }
 
+        .window-content {
+            display:flex;
+            flex-direction: row;
+            transition: 0.1s;
+        }
+
         .window-body {
+            text-align: left;
+            padding:0 5px 0 5px;
+            flex:2;
             resize: both;
             overflow: scroll;
+            background-color: rgba(82, 82, 82, 0.2);
+            border-radius: 5px;
+            margin:5px;
         }
+
+        .window-sidebar {
+            max-width: 10%;
+            min-width: fit-content;
+            padding:0 5px 0 5px;
+            text-align: left;
+            flex: 1;
+            background-color: rgba(82, 82, 82, 0.2);
+            border-radius: 5px;
+            margin:5px;
+        }
+        
 		
 		
 		.highlights {
-			background: conic-gradient(from 180deg at 45% 47%, #7C7C7C 5%, #000 10%, #7C7C7C 15%, #FFF 40%, #7C7C7C 50%, #FFF 60%, #7C7C7C 85%, #000 90%, #7C7C7C 95%);
+			background: linear-gradient(180deg,rgba(255, 255, 255, 1) 10%, rgba(127, 127, 127, 1) 25%, rgba(127, 127, 127, 1) 85%, rgba(0, 0, 0, 1) 100%);
 			mask-image: radial-gradient(75% 75% at 50% 50%, #0FF0 60%, #FFFFFF5D 100%);
 			
 			position: absolute;
@@ -83,26 +114,22 @@
 			width:100%;
 			height:100%;
 			z-index: -99;
-			opacity: 20%;
 		}
 
         .window {
             position: absolute;
             border-radius: 5px;
             text-align: center;
-            background-color: rgba(216, 222, 233, 0.5);
-            
+            background-color: rgba(216, 222, 233, 0.3);
             border: 2px solid;
-		
 	        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 	        backdrop-filter: blur(2px);
 	        -webkit-backdrop-filter: blur(2px);
         }
 
         .window-header {
-            padding: 20px;
+            padding: 10px;
             font-weight: bold;
-            border-bottom: inherit;
             cursor: move;
         }
 
