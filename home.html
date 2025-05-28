@@ -172,8 +172,8 @@
             height: 230px;
         }
     </style>
-    <script>
-        const windows = document.querySelectorAll(".window");
+    <script type="text/javascript">
+        var windows = document.querySelectorAll(".window");
 
         windows.forEach(grabWindow);
 
@@ -229,5 +229,55 @@
                 document.onpointermove = null;
             }
         }
+    </script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function loadPosts(data) {
+           data.forEach(post => {
+                var win = document.createElement("div");
+                win.className = "window inactive";
+                win.id = post.id;
+
+                var header = document.createElement("div");
+                header.className = "window-header";
+                win.appendChild(header);
+        
+                var headertext = document.createElement("div");
+                headertext.className = "window-text";
+                headertext.innerText = post.title
+                header.appendChild(headertext);
+
+                var content = document.createElement("div");
+                content.className = "window-content";
+                win.appendChild(content);
+
+                var postbody = document.createElement("div");
+                postbody.className = "window-body";
+                postbody.innerHTML = post.body;
+                content.appendChild(postbody);
+
+                var glass = document.createElement("div");
+                glass.className = "glass";
+                win.appendChild(glass);
+
+                var highlights = document.createElement("div");
+                highlights.className = "highlights";
+                win.appendChild(highlights);
+        
+                document.body.appendChild(win);
+
+                windows = document.querySelectorAll(".window");
+                grabWindow(win);
+           });
+        }
+
+        $(document).ready(function() {
+            $.ajax("https://api.github.com/repos/GarinHamburg/garinhamburg.github.io/discussions", {
+                headers: { Accept: "application/vnd.github.json" },
+                success: function(msg){
+                    loadPosts(msg);
+                }
+            });
+        });
     </script>
 </html>
