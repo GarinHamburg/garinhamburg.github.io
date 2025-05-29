@@ -87,6 +87,10 @@
             margin:5px;
         }
         
+        .window-info {
+            text-align: left;
+            margin: 5px;
+        }
 		
 		
 		.highlights {
@@ -118,7 +122,6 @@
 		}
 
         .window {
-		touch-action: none;
             position: absolute;
             border-radius: 5px;
             text-align: center;
@@ -232,7 +235,7 @@
             }
         }
     </script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script type="text/javascript">
         function loadPosts(data) {
            data.forEach(post => {
@@ -246,8 +249,20 @@
         
                 var headertext = document.createElement("div");
                 headertext.className = "window-text";
-                headertext.innerText = post.title
+                headertext.innerText = post.title;
                 header.appendChild(headertext);
+
+                var poster = document.createElement("div");
+                poster.className = "window-info";
+                var posterinfo = document.createElement("a");
+                var posterimage = document.createElement("img");
+                posterimage.src = post.user.avatar_url;
+                posterimage.style.height = "20px";
+                posterinfo.appendChild(posterimage);
+                posterinfo.innerHTML = posterinfo.innerHTML + post.user.login;
+                posterinfo.href = post.user.html_url;	
+                poster.appendChild(posterinfo)
+                win.appendChild(poster);
 
                 var content = document.createElement("div");
                 content.className = "window-content";
@@ -255,8 +270,19 @@
 
                 var postbody = document.createElement("div");
                 postbody.className = "window-body";
-                postbody.innerHTML = post.body;
+                var postbodycontent={};
+                postbodycontent.text = post.body;
+                $.post("https://api.github.com/markdown", JSON.stringify(postbodycontent))
+                .done(function(msg) {
+                    postbody.innerHTML = msg;
+                });
+                postbody.style.width = "270px";
                 content.appendChild(postbody);
+
+                var reactions = document.createElement("div");
+                reactions.className = "window-info";
+                reactions.innerText = post.reactions.total_count + " reactions";
+                win.appendChild(reactions);
 
                 var glass = document.createElement("div");
                 glass.className = "glass";
@@ -265,7 +291,10 @@
                 var highlights = document.createElement("div");
                 highlights.className = "highlights";
                 win.appendChild(highlights);
-        
+
+                win.style.top = Math.floor(Math.random() * (window.innerHeight + 1)) + "px";
+                win.style.left = Math.floor(Math.random() * (window.innerWidth + 1)) + "px";
+
                 document.body.appendChild(win);
 
                 windows = document.querySelectorAll(".window");
