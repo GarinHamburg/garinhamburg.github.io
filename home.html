@@ -3,7 +3,7 @@
 	<title>Window</title>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
     </head>
-    <body>
+    <body type="text/html">
         <div class="window inactive" id="helloworld">
             <div class="window-header">
               <div class="window-text">Test</div>
@@ -54,7 +54,7 @@
 			<div class="highlights"></div>
         </div>
     </body>
-    <style>
+    <style type="text/css">
         :root {
             background:transparent;
         }
@@ -136,7 +136,7 @@
             padding: 10px;
             font-weight: bold;
             cursor: move;
-	    touch-action: none;
+	        touch-action: none;
         }
 
         .active {
@@ -149,7 +149,7 @@
             color: grey;
         }
     </style>
-    <style>
+    <style type="text/css">
         #helloworld {
             top: 167px;
             left:372px;
@@ -293,10 +293,10 @@
                 highlights.className = "highlights";
                 win.appendChild(highlights);
 
-                win.style.top = Math.floor(Math.random() * (window.innerHeight + 1)) + "px";
-                win.style.left = Math.floor(Math.random() * (window.innerWidth + 1)) + "px";
-
                 document.body.appendChild(win);
+                win.style.top = Math.floor(Math.random() * (window.innerHeight-win.getBoundingClientRect().height)) + "px";
+                win.style.left = Math.floor(Math.random() * (window.innerWidth-win.getBoundingClientRect().width)) + "px";
+
 
                 windows = document.querySelectorAll(".window");
                 grabWindow(win);
